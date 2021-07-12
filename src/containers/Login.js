@@ -6,10 +6,6 @@ import bgImg from '../asserts/images/loginBg.jpg'
 
 import axios from 'axios'
 // 图标
-import {
-    UserOutlined,
-    LockOutlined,
-} from '@ant-design/icons';
 
 // 登录模块整体
 class Login extends React.Component {
@@ -66,7 +62,7 @@ class Login extends React.Component {
                     <div className="title">react测试系统</div>
                     <div className="item">
                         <div className="label">
-                            <UserOutlined />
+                            {/* <UserOutlined /> */}
                         </div>
                         <div className="val">
                             <input placeholder="请输入账号" onChange={(e) => { this.changeName(e) }} value={this.state.userName} />
@@ -74,7 +70,7 @@ class Login extends React.Component {
                     </div>
                     <div className="item">
                         <div className="label">
-                            <LockOutlined />
+                            {/* <LockOutlined /> */}
                         </div>
                         <div className="val">
                             <input type="password" placeholder="请输入密码" onChange={(e) => { this.changePwd(e) }} value={this.state.password} />

@@ -1,11 +1,17 @@
 import './Login.less'
 import React from 'react';
+// 登录页背景图
 import bgImg from '../asserts/images/loginBg.jpg'
+// 输入三元素的图标
 import loginCode from '../asserts/images/loginCode.png'
 import loginPer from '../asserts/images/loginPer.png'
 import loginPwd from '../asserts/images/loginPwd.png'
+// 公共封装js
 import commonApi from '../asserts/api/commonApi'
+// element消息提醒组件
 import { Message } from 'element-react';
+// loading组件
+import Loading from '../components/Loading'
 // 图标
 
 // 登录模块整体
@@ -13,21 +19,23 @@ class Login extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			userName: "",
-			password: "",
-			code: "",
-			codeImg: "",
+			userName: "",//用户名
+			password: "",//密码
+			code: "",//验证码
+			codeImg: "",//验证码图片
+			shouLoading: false//是否显示loading
 		}
 	}
 	// 获取验证码
 	getImage() {
 		let param = {}
-		commonApi.getApi('/getCaptchaCode', param).then((res) => {
-			this.setState({
-				codeImg: res.data.data.code
-			})
-			sessionStorage.setItem('token', res.data.data.token)
-			console.log(res)
+		commonApi.postApi('/getCode', param).then((res) => {
+			let num = parseInt(Math.random() * 5)
+			if (res.data.code == 1) {
+				this.setState({
+					codeImg: res.data.data.list[num].image
+				})
+			}
 		}).catch((err) => {
 			console.log(err)
 		})
@@ -60,18 +68,32 @@ class Login extends React.Component {
 		}
 	}
 	submit() {
+		this.setState({
+			shouLoading: true
+		})
 		let param = {
-			username: this.state.userName,
+			userName: this.state.userName,
 			password: this.state.password,
 			code: this.state.code,
 		}
-		commonApi.getApi('/login', param).then((res) => {
-			if (res.code == 1) {
-				this.props.history.push('/home')
+		commonApi.postApi('/login', param).then((res) => {
+			this.setState({
+				shouLoading: false
+			})
+			if (res.data.code == 1) {
+				if (res.data.data.verifySuccess == 'success') {
+					Message.success('登录成功');
+					this.props.history.push('/home')
+				} else {
+					Message.error('用户名或密码错误');
+				}
 			} else {
 				Message.error('数据请求错误');
 			}
 		}).catch((err) => {
+			this.setState({
+				shouLoading: false
+			})
 			Message.error('数据请求错误');
 		})
 	}
@@ -83,6 +105,9 @@ class Login extends React.Component {
 
 		return (
 			<div className="loginBlock">
+				{
+					this.state.shouLoading ? (<Loading />) : null
+				}
 				<div className="imgBlock">
 					<img src={bgImg} />
 				</div>
@@ -112,8 +137,9 @@ class Login extends React.Component {
 							<input placeholder="请输入验证码" onChange={(e) => { this.changeCode(e) }} value={this.state.code} />
 						</div>
 						<div className="codeImg">
-							<div dangerouslySetInnerHTML={{ __html: this.state.codeImg }} />
+							<img src={this.state.codeImg} />
 						</div>
+						<div className="changeCode" onClick={() => { this.getImage() }}>换一张</div>
 					</div>
 					<div className="btn"
 						onClick={() => { this.submit() }}

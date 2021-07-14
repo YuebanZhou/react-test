@@ -1,15 +1,50 @@
 import './Home.less'
 import React from 'react';
-import ReactDOM from 'react-dom';
+// 获取首页背景图
 import banner1 from '../asserts/images/banner1.jpg'
-
+// 公共封装js
+import commonApi from '../asserts/api/commonApi'
+// element消息提醒组件
+import { Message } from 'element-react';
+// loading组件
+import Loading from '../components/Loading'
 class Home extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
 			activeMenu: null,
-			activeList: null
+			activeList: null,
+			menuArr: [],//菜单及链接
+			myArr: [],//我的个人信息
+			techArr: [],//展示列表
+			shouLoading: false//是否显示loading
 		}
+	}
+	// 获取个人信息
+	getUserInfo() {
+		this.setState({
+			shouLoading: true
+		})
+		let param = {}
+		commonApi.getApi('/getUserInfo', param).then((res) => {
+			this.setState({
+				shouLoading: false
+			})
+			if (res.data.code == 1) {
+				this.setState({
+					menuArr: res.data.data.menuArr,
+					myArr: res.data.data.myArr,
+					techArr: res.data.data.techArr,
+				})
+			} else {
+				Message.error('数据请求错误');
+			}
+		}).catch((err) => {
+			this.setState({
+				shouLoading: false
+			})
+			Message.error('数据请求错误');
+		})
 	}
 	// 菜单选择第一级
 	selectMenuLev1(e, index) {
@@ -36,94 +71,20 @@ class Home extends React.Component {
 			activeList: index
 		})
 	}
+	componentDidMount() {
+		// 初始化获取验证码
+		this.getUserInfo()
+	}
 	render() {
-		let menuArr = [
-			{
-				name: "首页",
-				link: "",
-				children: []
-			}, {
-				name: "多次",
-				link: "",
-				children: [
-					{
-						name: "多次1",
-						link: "",
-					}, {
-						name: "多次2",
-						link: "",
-					}, {
-						name: "多次3",
-						link: "",
-					}
-				]
-			}, {
-				name: "其他",
-				link: "",
-				children: [
-					{
-						name: "其他1",
-						link: "",
-					}, {
-						name: "其他2",
-						link: "",
-					}
-				]
-			}, {
-				name: "关于",
-				link: "",
-				children: []
-			}
-		]
-		let myArr = [
-			{
-				name: "信息1",
-				msg: "内容111111"
-			}, {
-				name: "信息2",
-				msg: "内容2222222222222222"
-			}, {
-				name: "信息3333",
-				msg: "内容"
-			}, {
-				name: "信息44444444",
-				msg: "内容444444444"
-			}, {
-				name: "信息5",
-				msg: "内容555555"
-			}, {
-				name: "信息6",
-				msg: "内容666"
-			}
-		]
-		let techArr = [
-			{
-				name: "技能1",
-				percent: "80"
-			},
-			{
-				name: "技能2",
-				percent: "30"
-			},
-			{
-				name: "技能3",
-				percent: "50"
-			},
-			{
-				name: "技能4",
-				percent: "60"
-			},
-			{
-				name: "技能5",
-				percent: "10"
-			}
-		]
 		return (
 			<div className="homeBlock">
+				{
+					this.state.shouLoading ? (<Loading />) : null
+				}
 				<div className="headMenu">
 					<div className="posiBlock">
 						{
-							menuArr.map((item, index) => {
+							this.state.menuArr.map((item, index) => {
 								return (
 									<div className="lev1Menu" key={index}>
 										<div className="lev1Name"
@@ -173,7 +134,7 @@ class Home extends React.Component {
 						</div>
 						<div className="msgList">
 							{
-								myArr.map((item, index) => {
+								this.state.myArr.map((item, index) => {
 									return (
 										<div className="sinMsg" key={index}>
 											<div className="label">{item.name}</div>
@@ -188,7 +149,7 @@ class Home extends React.Component {
 					<div className="right">
 						<div className="techList">
 							{
-								techArr.map((item, index) => {
+								this.state.techArr.map((item, index) => {
 									return (
 										<div className={this.state.activeList == index ? "sinTech active" : "sinTech"}
 											key={index}

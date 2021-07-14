@@ -1,6 +1,6 @@
 import axios from 'axios'
 // 创造请求实例
-let baseUrl = 'http://be9f0882baa5.ngrok.io'
+let baseUrl = 'https://www.fastmock.site/mock/034f4bf99908ba68e60e067c54a98ef0/reactTest'
 const service = axios.create({
   baseURL: baseUrl,
   timeout: 5000

@@ -4,7 +4,6 @@ import { HashRouter, Switch, Route, Redirect } from 'react-router-dom'
 // 登录页
 import Login from './containers/Login'
 import Home from './containers/Home'
-import About from './containers/About'
 
 function App() {
 	return (
@@ -13,7 +12,6 @@ function App() {
 				<Switch>
 					<Route path="/login" component={Login}></Route>
 					<Route path="/home" component={Home}></Route>
-					<Route path="/about" component={About}></Route>
 					<Route path="/" component={Login}></Route>
 				</Switch>
 			</HashRouter>

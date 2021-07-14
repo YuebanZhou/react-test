@@ -8,15 +8,15 @@ import commonApi from '../asserts/api/commonApi'
 import { Message } from 'element-react';
 // loading组件
 import Loading from '../components/Loading'
+// 右侧组件
+import HomeMain from './pages/HomeMain'
 class Home extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
 			activeMenu: null,
-			activeList: null,
 			menuArr: [],//菜单及链接
 			myArr: [],//我的个人信息
-			techArr: [],//展示列表
 			shouLoading: false//是否显示loading
 		}
 	}
@@ -34,7 +34,6 @@ class Home extends React.Component {
 				this.setState({
 					menuArr: res.data.data.menuArr,
 					myArr: res.data.data.myArr,
-					techArr: res.data.data.techArr,
 				})
 			} else {
 				Message.error('数据请求错误');
@@ -65,14 +64,8 @@ class Home extends React.Component {
 			e.target.classList.remove('active');
 		}
 	}
-	// 悬浮菜单
-	hoverList(e, index) {
-		this.setState({
-			activeList: index
-		})
-	}
 	componentDidMount() {
-		// 初始化获取验证码
+		// 初始化
 		this.getUserInfo()
 	}
 	render() {
@@ -147,22 +140,7 @@ class Home extends React.Component {
 						</div>
 					</div>
 					<div className="right">
-						<div className="techList">
-							{
-								this.state.techArr.map((item, index) => {
-									return (
-										<div className={this.state.activeList == index ? "sinTech active" : "sinTech"}
-											key={index}
-											onMouseEnter={(e) => { this.hoverList(e, index) }}
-											onMouseLeave={(e) => { this.hoverList(e, null) }}>
-											<div className="name">{item.name}</div>
-											<div className="percent">{item.percent}</div>
-										</div>
-									)
-
-								})
-							}
-						</div>
+						<HomeMain activeMenu={1} />
 					</div>
 				</div>
 			</div >

@@ -5,6 +5,6 @@ import './index.css';
 import 'element-theme-default'
 
 ReactDOM.render(
-    <App />,
-    document.getElementById('root')
+	<App />,
+	document.getElementById('root')
 )

@@ -1,5 +1,5 @@
 // 引入app组件样式文件
-import './App.css'
+import './App.less'
 import { HashRouter, Switch, Route, Redirect } from 'react-router-dom'
 // 登录页
 import Login from './containers/Login'

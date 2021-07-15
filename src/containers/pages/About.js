@@ -1,7 +1,7 @@
 import './Home.less'
 import React from 'react';
 import ReactDOM from 'react-dom';
-import commonApi from '../asserts/api/commonApi'
+import commonApi from '@A/api/commonApi'
 class About extends React.Component {
   
   render() {

@@ -7,7 +7,6 @@ const service = axios.create({
 })
 // 请求拦截器
 service.interceptors.request.use(function (config) {
-  console.log(config)
   if (sessionStorage.getItem('token')) {
     config.headers['token'] = sessionStorage.getItem('token')
   }
@@ -45,11 +44,12 @@ export function getApi(url, params) {
     })
   })
 }
-export default {
+const returnObj = {
   postApi(url, params) {
     return postApi(url, params);
   },
   getApi(url, params) {
     return getApi(url, params);
   }
-};
+}
+export default returnObj;

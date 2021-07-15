@@ -13,6 +13,7 @@ function App() {
 					<Route path="/login" component={Login}></Route>
 					<Route path="/home" component={Home}></Route>
 					<Route path="/" component={Login}></Route>
+					<Redirect to="/login" component={Login}></Redirect>
 				</Switch>
 			</HashRouter>
 		</div>

@@ -1,6 +1,6 @@
 import './HomeMain.less'
 import React from 'react';// 公共封装js
-import commonApi from '../../asserts/api/commonApi'
+import commonApi from '@A/api/commonApi'
 // element消息提醒组件
 import { Message } from 'element-react';
 class HomeMain extends React.Component {
@@ -15,7 +15,7 @@ class HomeMain extends React.Component {
   getTechMsg() {
     let param = {}
     commonApi.getApi('/getTechMsg', param).then((res) => {
-      if (res.data.code == 1) {
+      if (res.data.code === "1") {
         this.setState({
           techArr: res.data.data.techArr,
         })
@@ -36,6 +36,11 @@ class HomeMain extends React.Component {
     // 初始化
     this.getTechMsg()
   }
+  componentWillUnmount() {
+    this.setState = (state, callback) => {
+      return;
+    };
+  }
   render() {
 
     return (
@@ -43,7 +48,7 @@ class HomeMain extends React.Component {
         {
           this.state.techArr.map((item, index) => {
             return (
-              <div className={this.state.activeList == index ? "sinTech active" : "sinTech"}
+              <div className={Number(this.state.activeList) === index ? "sinTech active" : "sinTech"}
                 key={index}
                 onMouseEnter={(e) => { this.hoverList(e, index) }}
                 onMouseLeave={(e) => { this.hoverList(e, null) }}>

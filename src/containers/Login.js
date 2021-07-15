@@ -1,17 +1,17 @@
 import './Login.less'
 import React from 'react';
 // 登录页背景图
-import bgImg from '../asserts/images/loginBg.jpg'
+import bgImg from '@A/images/loginBg.jpg'
 // 输入三元素的图标
-import loginCode from '../asserts/images/loginCode.png'
-import loginPer from '../asserts/images/loginPer.png'
-import loginPwd from '../asserts/images/loginPwd.png'
+import loginCode from '@A/images/loginCode.png'
+import loginPer from '@A/images/loginPer.png'
+import loginPwd from '@A/images/loginPwd.png'
 // 公共封装js
-import commonApi from '../asserts/api/commonApi'
+import commonApi from '@A/api/commonApi'
 // element消息提醒组件
 import { Message } from 'element-react';
 // loading组件
-import Loading from '../components/Loading'
+import Loading from '@C/Loading'
 // 图标
 
 // 登录模块整体
@@ -31,13 +31,11 @@ class Login extends React.Component {
 		let param = {}
 		commonApi.postApi('/getCode', param).then((res) => {
 			let num = parseInt(Math.random() * 5)
-			if (res.data.code == 1) {
+			if (res.data.code === "1") {
 				this.setState({
 					codeImg: res.data.data.list[num].image
 				})
 			}
-		}).catch((err) => {
-			console.log(err)
 		})
 	}
 	// 改变账号
@@ -61,7 +59,7 @@ class Login extends React.Component {
 	// 提交按钮添加动画效果
 	toggleAniBtn(e, type) {
 		let dom = document.getElementsByClassName('btn')[0]
-		if (type == 'enter') {
+		if (type === 'enter') {
 			dom.className = "btn active"
 		} else {
 			dom.className = "btn"
@@ -80,8 +78,8 @@ class Login extends React.Component {
 			this.setState({
 				shouLoading: false
 			})
-			if (res.data.code == 1) {
-				if (res.data.data.verifySuccess == 'success') {
+			if (res.data.code === "1") {
+				if (res.data.data.verifySuccess === 'success') {
 					Message.success('登录成功');
 					this.props.history.push('/home')
 				} else {
@@ -109,13 +107,13 @@ class Login extends React.Component {
 					this.state.shouLoading ? (<Loading />) : null
 				}
 				<div className="imgBlock">
-					<img src={bgImg} />
+					<img src={bgImg} alt="" title="" />
 				</div>
 				<div className="msgBlock">
 					<div className="title">react测试系统</div>
 					<div className="item">
 						<div className="label">
-							<img src={loginCode} />
+							<img src={loginCode} alt="" title="" />
 						</div>
 						<div className="val">
 							<input placeholder="请输入账号" onChange={(e) => { this.changeName(e) }} value={this.state.userName} />
@@ -123,7 +121,7 @@ class Login extends React.Component {
 					</div>
 					<div className="item">
 						<div className="label">
-							<img src={loginPer} />
+							<img src={loginPer} alt="" title="" />
 						</div>
 						<div className="val">
 							<input type="password" placeholder="请输入密码" onChange={(e) => { this.changePwd(e) }} value={this.state.password} />
@@ -131,13 +129,13 @@ class Login extends React.Component {
 					</div>
 					<div className="item">
 						<div className="label">
-							<img src={loginPwd} />
+							<img src={loginPwd} alt="" title="" />
 						</div>
 						<div className="val valSmall">
 							<input placeholder="请输入验证码" onChange={(e) => { this.changeCode(e) }} value={this.state.code} />
 						</div>
 						<div className="codeImg">
-							<img src={this.state.codeImg} />
+							<img src={this.state.codeImg} alt="" title="" />
 						</div>
 						<div className="changeCode" onClick={() => { this.getImage() }}>换一张</div>
 					</div>

@@ -36,22 +36,20 @@ class HomeObject extends React.Component {
     };
   }
   changeCompany(e, item, index) {
-    console.log(e, item, index)
-    console.log(this.props.parent)
+    Message.success('触发子传父事件');
     this.props.parent.changeCompany(item, index)
   }
   render() {
 
     return (
-      <div className="objectList"  >
+      <div id="HomeObject"  >
         <div className="lineDotList">
         </div>
         <div className="msgBlock">
           {
             this.state.companyList.map((item, index) => {
               return (
-                <div className="sinCompany" key={index}
-                  onClick={(e) => { this.changeCompany(e, item, index) }}>
+                <div className="sinCompany" key={index}>
                   <div className="top">
                     <div className="name">{item.name}</div>
                     <div className="time">
@@ -59,7 +57,8 @@ class HomeObject extends React.Component {
                       <span className="text">至</span>
                       <span className="timeVal">{item.endTime}</span>
                     </div>
-                    <div className="more">
+                    <div className="more" onClick={(e) => { this.changeCompany(e, item, index) }}>
+                      <span>详细</span>
                       <img src={more} alt="" title="" />
                     </div>
                   </div>

@@ -21,7 +21,8 @@ class Home extends React.Component {
 			menuArr: [],//菜单及链接
 			myArr: [],//我的个人信息
 			shouLoading: false,//是否显示loading
-			chooseMenuIndex: 2
+			chooseMenuIndex: 5,
+			activeCompanyId: ''
 		}
 	}
 	// 获取个人信息
@@ -77,12 +78,17 @@ class Home extends React.Component {
 		// 初始化
 		this.getUserInfo()
 	}
+	// 公司列表，子组件向父组件传值
 	changeCompany(item, index) {
-		console.log('父组件', item, index)
+		console.log(item)
+		this.setState({
+			chooseMenuIndex: 5,
+			activeCompanyId: item.id
+		})
 	}
 	render() {
 		return (
-			<div className="homeBlock">
+			<div id="Home">
 				{
 					this.state.shouLoading ? (<Loading />) : null
 				}
@@ -157,8 +163,8 @@ class Home extends React.Component {
 							this.state.shouLoading ? null : (
 								Number(this.state.chooseMenuIndex) === 0 ? <HomeMain /> :
 									Number(this.state.chooseMenuIndex) === 1 ? <HomeTechnology /> :
-										Number(this.state.chooseMenuIndex) === 2 ? <HomeObject parent={this} /> : null
-								// <HomeObjectDetail parent={this} />
+										Number(this.state.chooseMenuIndex) === 2 ? <HomeObject parent={this} /> :
+											<HomeObjectDetail parent={this} />
 							)
 						}
 					</div>

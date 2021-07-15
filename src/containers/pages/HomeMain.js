@@ -44,7 +44,7 @@ class HomeMain extends React.Component {
   render() {
 
     return (
-      <div className="techList">
+      <div id="HomeMain">
         {
           this.state.techArr.map((item, index) => {
             return (

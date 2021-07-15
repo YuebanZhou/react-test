@@ -7,7 +7,7 @@ import Home from './containers/Home'
 
 function App() {
 	return (
-		<div className="App">
+		<div id="App">
 			<HashRouter>
 				<Switch>
 					<Route path="/login" component={Login}></Route>

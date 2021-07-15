@@ -1,4 +1,4 @@
-.objectList {
+#HomeObject {
   height: 100%;
 
   .lineDotList {
@@ -59,7 +59,7 @@
       .top {
         width: 100%;
         height: 50px;
-        padding: 0 20px;
+        padding-left: 20px;
         border-bottom: 1px solid rgba(255, 255, 255, 0.4);
         box-sizing: border-box;
 
@@ -89,13 +89,19 @@
         .more {
           float: right;
           height: 50px;
-          width: 50px;
-          text-align: right;
+          line-height: 50px;
+          width: 100px;
+          text-align: center;
           cursor: pointer;
+
+          span {
+            margin-right: 5px;
+            font-size: 12px;
+          }
 
           img {
             width: 20px;
-            margin-top: 15px;
+            vertical-align: middle;
           }
         }
       }

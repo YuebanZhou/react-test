@@ -16,7 +16,7 @@ class HomeTechnology extends React.Component {
   render() {
 
     return (
-      <div className="technologyList">HomeTechnology</div>
+      <div id="HomeTechnology">HomeTechnology</div>
     )
   }
 

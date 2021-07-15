@@ -1,0 +1,24 @@
+#HomeObjectDetail {
+  width: calc(100% - 100px);
+  margin: 0 auto;
+
+  .companyName {}
+
+  .msgBlock {
+    width: 100%;
+    overflow: hidden;
+    color: #fff;
+
+    .sinObject {
+      width: calc((100% - 50px) / 2);
+      background: rgba(0, 0, 0, 0.3);
+      float: left;
+      margin-right: 50px;
+      margin-bottom: 50px;
+
+      &:nth-child(2n) {
+        margin-right: 0;
+      }
+    }
+  }
+}

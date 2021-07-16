@@ -88,15 +88,18 @@
 
 	.listMenu {
 		position: absolute;
-		width: calc(100% - 200px);
-		height: calc(100% - 80px);
-		left: 100px;
-		top: 80px;
+		width: 100%;
+		height: 100%;
+		left: 0;
+		top: 0;
 		user-select: none;
+		overflow-y: auto;
+		padding: 100px;
+		box-sizing: border-box;
+		padding-top: 180px;
 
 		.left {
 			float: left;
-			margin-top: 100px;
 			width: 350px;
 			background: rgba(255, 255, 255, 0.2);
 			border-radius: 8px;
@@ -175,9 +178,31 @@
 
 		.right {
 			float: left;
-			margin-top: 100px;
 			width: calc(100% - 350px);
-			height: calc(100% - 200px);
+			height: 100%;
+			box-sizing: border-box;
+			
 		}
+
+		// .right::-webkit-scrollbar {
+		// 	/*滚动条整体样式*/
+		// 	width: 10px;
+		// 	/*高宽分别对应横竖滚动条的尺寸*/
+		// 	height: 1px;
+		// }
+
+		// .right::-webkit-scrollbar-thumb {
+		// 	/*滚动条里面小方块*/
+		// 	border-radius: 10px;
+		// 	box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+		// 	background: #535353;
+		// }
+
+		// .right::-webkit-scrollbar-track {
+		// 	/*滚动条里面轨道*/
+		// 	box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+		// 	border-radius: 10px;
+		// 	background: #ededed;
+		// }
 	}
 }

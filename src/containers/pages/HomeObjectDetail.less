@@ -1,24 +1,135 @@
 #HomeObjectDetail {
   width: calc(100% - 100px);
   margin: 0 auto;
+  height: 100%;
+  overflow-y: auto;
 
-  .companyName {}
+  .companyName {
+    background: rgba(149, 149, 210, 0.4);
+    color: #fff;
+    position: relative;
+    border-radius: 8px 8px 0 0;
+    overflow: hidden;
+    height: 50px;
+    line-height: 50px;
+    padding-left: 20px;
+    box-sizing: border-box;
+
+    .name {
+      float: left;
+    }
+
+    .return {
+      float: right;
+      width: 100px;
+      text-align: center;
+      cursor: pointer;
+
+      span {
+        margin-right: 5px;
+        font-size: 12px;
+      }
+
+      img {
+        width: 20px;
+        vertical-align: middle;
+      }
+    }
+  }
 
   .msgBlock {
     width: 100%;
     overflow: hidden;
     color: #fff;
 
-    .sinObject {
-      width: calc((100% - 50px) / 2);
-      background: rgba(0, 0, 0, 0.3);
-      float: left;
-      margin-right: 50px;
-      margin-bottom: 50px;
 
-      &:nth-child(2n) {
-        margin-right: 0;
+
+    .top {
+      overflow: hidden;
+      width: calc(100% - 72px);
+      float: left;
+      box-sizing: border-box;
+
+      .objectName {
+        float: left;
+        margin-right: 10px;
       }
+
+      .time {
+        float: left;
+        color: #eee;
+        font-size: 12px;
+
+        .startTime {}
+
+        .text {
+          margin-left: 5px;
+          margin-right: 5px;
+        }
+
+        .endTime {}
+      }
+
+    }
+
+    .msgDetail {
+
+      .objSinList {
+        margin-bottom: 10px;
+
+        .label {
+          font-size: 14px;
+        }
+
+        .value {
+          font-size: 12px;
+        }
+      }
+
+    }
+
+  }
+
+  .el-collapse {
+    border: 1px solid rgba(255, 255, 255, 0.3);
+
+    .el-collapse-item {
+      .el-collapse-item__header {
+        overflow: hidden;
+        height: 43px;
+        line-height: 43px;
+        padding-left: 0px;
+        background-color: rgba(46, 43, 43, 0.3);
+        color: #fff;
+        cursor: pointer;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        font-size: 14px;
+
+        i {
+          float: left;
+          height: 43px;
+          width: 43px;
+          margin: 0;
+          text-align: center;
+          line-height: 43px;
+          color: #fff;
+        }
+      }
+
+      .collapse-transition {
+        .el-collapse-item__wrap {
+          background-color: rgba(0, 0, 0, 0.4);
+          border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+
+          .el-collapse-item__content {
+            color: #fff;
+          }
+        }
+
+      }
+
+      &.is-active {}
     }
   }
 }
+

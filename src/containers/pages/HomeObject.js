@@ -4,7 +4,7 @@ import commonApi from '@A/api/commonApi'
 // 页面需要的图片
 import more from '@A/images/more.png'
 // element组件
-import { Message } from 'element-react';
+import { Message, Notification } from 'element-react';
 class HomeObject extends React.Component {
   constructor(props) {
     super(props)
@@ -35,9 +35,13 @@ class HomeObject extends React.Component {
       return;
     };
   }
-  changeCompany(e, item, index) {
-    Message.success('触发子传父事件');
-    this.props.parent.changeCompany(item, index)
+  changeCompany(item) {
+    Notification({
+      title: '提示',
+      message: '触发子传父，获取点击公司详情',
+      type: 'success'
+    });
+    this.props.parent.changeCompany(item, "1")
   }
   render() {
 
@@ -57,7 +61,7 @@ class HomeObject extends React.Component {
                       <span className="text">至</span>
                       <span className="timeVal">{item.endTime}</span>
                     </div>
-                    <div className="more" onClick={(e) => { this.changeCompany(e, item, index) }}>
+                    <div className="more" onClick={(e) => { this.changeCompany(item) }}>
                       <span>详细</span>
                       <img src={more} alt="" title="" />
                     </div>

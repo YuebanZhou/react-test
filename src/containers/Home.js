@@ -13,15 +13,17 @@ import HomeMain from './pages/HomeMain'
 import HomeObject from './pages/HomeObject'
 import HomeObjectDetail from './pages/HomeObjectDetail'
 import HomeTechnology from './pages/HomeTechnology'
+import HomeAbout from './pages/HomeAbout'
 class Home extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			activeMenu: null,
+			hoverMenu: null,
+			clickMenu: 2,
 			menuArr: [],//菜单及链接
 			myArr: [],//我的个人信息
 			shouLoading: false,//是否显示loading
-			chooseMenuIndex: 5,
+
 			activeCompanyId: ''
 		}
 	}
@@ -52,13 +54,20 @@ class Home extends React.Component {
 	}
 	// 菜单选择第一级
 	selectMenuLev1(e, index) {
+		let element = document.getElementsByClassName('lev1Name')[index]
 		this.setState({
-			activeMenu: index
+			hoverMenu: index
 		})
-		if (e.target.classList.length === 1) {
-			e.target.classList.add('active');
+		if (element.classList.length === 1) {
+			element.className = "lev1Name active";
 		} else {
-			e.target.classList.remove('active');
+			if (this.state.hoverMenu === this.state.clickMenu) {
+				// 如果悬浮的是当前的菜单，不做移出类名的操作
+				element.className = "lev1Name active";
+			} else {
+				element.className = "lev1Name";
+			}
+
 		}
 	}
 	// 菜单选择第二级
@@ -70,25 +79,44 @@ class Home extends React.Component {
 		}
 	}
 	clickMenu(index) {
+
+		var elements = document.getElementsByClassName('lev1Name');
+		Array.prototype.forEach.call(elements, function (element) {
+			element.className = 'lev1Name';
+		});
+		let element = document.getElementsByClassName('lev1Name')[index]
+		element.className = "lev1Name active";
 		this.setState({
-			chooseMenuIndex: index
+			clickMenu: index
 		})
 	}
 	componentDidMount() {
 		// 初始化
 		this.getUserInfo()
 	}
-	// 公司列表，子组件向父组件传值
-	changeCompany(item, index) {
-		console.log(item)
-		this.setState({
-			chooseMenuIndex: 5,
-			activeCompanyId: item.id
-		})
+	// 切换公司列表、项目详情事件
+	changeCompany(item, flag) {
+		if (flag === '1') {
+			// 公司列表跳转到项目
+			this.setState({
+				clickMenu: 5,
+				activeCompanyId: item.id
+			})
+		} else if (flag === '2') {
+			// 公司列表跳转到项目
+			this.setState({
+				clickMenu: 2,
+			})
+		}
+
 	}
 	render() {
+		var sectionStyle = {
+			backgroundImage: `url(${banner1})`,
+			backgroundSize: "100% 100%"
+		};
 		return (
-			<div id="Home">
+			<div id="Home" style={sectionStyle}>
 				{
 					this.state.shouLoading ? (<Loading />) : null
 				}
@@ -105,10 +133,10 @@ class Home extends React.Component {
 										>{item.name}</div>
 										{
 											item.children.length === 0 ? null : (
-												<div className={Number(this.state.activeMenu) === index ? "lev2Menu active" : "lev2Menu"}
+												<div className={Number(this.state.hoverMenu) === index ? "lev2Menu active" : "lev2Menu"}
 													onMouseLeave={(e) => {
 														this.setState({
-															activeMenu: null
+															hoverMenu: null
 														})
 													}}>
 													{
@@ -135,9 +163,6 @@ class Home extends React.Component {
 					</div>
 
 				</div>
-				<div className="bannerMenu">
-					<img src={banner1} alt="" title="" />
-				</div>
 				<div className="listMenu">
 					<div className="left">
 						<div className="headImg">
@@ -161,10 +186,11 @@ class Home extends React.Component {
 					<div className="right">
 						{
 							this.state.shouLoading ? null : (
-								Number(this.state.chooseMenuIndex) === 0 ? <HomeMain /> :
-									Number(this.state.chooseMenuIndex) === 1 ? <HomeTechnology /> :
-										Number(this.state.chooseMenuIndex) === 2 ? <HomeObject parent={this} /> :
-											<HomeObjectDetail parent={this} />
+								Number(this.state.clickMenu) === 0 ? <HomeMain /> :
+									Number(this.state.clickMenu) === 1 ? <HomeTechnology /> :
+										Number(this.state.clickMenu) === 2 ? <HomeObject parent={this} /> :
+											Number(this.state.clickMenu) === 3 ? <HomeAbout /> :
+												<HomeObjectDetail parent={this} />
 							)
 						}
 					</div>

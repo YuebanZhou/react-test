@@ -81,7 +81,12 @@ class Login extends React.Component {
 			if (res.data.code === "1") {
 				if (res.data.data.verifySuccess === 'success') {
 					Message.success('登录成功');
-					this.props.history.push('/home')
+					this.props.history.push({
+						pathname: '/home',
+						state: {
+							clickMenu: 0//默认选择到第一个菜单
+						}
+					})
 				} else {
 					Message.error('用户名或密码错误');
 				}

@@ -17,17 +17,26 @@ import HomeAbout from './pages/HomeAbout'
 class Home extends React.Component {
 	constructor(props) {
 		super(props)
+		// 根据传参定位到菜单的某项
+		if (this.props.location.state && this.props.location.state.clickMenu) {
+			sessionStorage.setItem('clickMenu', this.props.location.state.clickMenu)
+		}
 		this.state = {
 			hoverMenu: null,
-			clickMenu: 2,
+			clickMenu: sessionStorage.getItem('clickMenu') ?
+				sessionStorage.getItem('clickMenu') : 0,
 			menuArr: [],//菜单及链接
 			myArr: [],//我的个人信息
 			shouLoading: false,//是否显示loading
-
-			activeCompanyId: ''
+			activeCompanyId: ''//选中的公司的id，作为父组件用来给两个子组件传值
 		}
 	}
-	// 获取个人信息
+	componentDidMount() {
+		// 初始化
+		// 获取个人信息、菜单列表
+		this.getUserInfo()
+	}
+	// 获取个人信息、菜单列表
 	getUserInfo() {
 		this.setState({
 			shouLoading: true
@@ -52,7 +61,7 @@ class Home extends React.Component {
 			Message.error('数据请求错误');
 		})
 	}
-	// 菜单选择第一级
+	// 菜单悬浮第一级
 	selectMenuLev1(e, index) {
 		let element = document.getElementsByClassName('lev1Name')[index]
 		this.setState({
@@ -70,7 +79,7 @@ class Home extends React.Component {
 
 		}
 	}
-	// 菜单选择第二级
+	// 菜单悬浮第二级
 	selectMenuLev2(e) {
 		if (e.target.classList.length === 1) {
 			e.target.classList.add('active');
@@ -78,22 +87,15 @@ class Home extends React.Component {
 			e.target.classList.remove('active');
 		}
 	}
+	// 点击一级菜单
 	clickMenu(index) {
-
-		var elements = document.getElementsByClassName('lev1Name');
-		Array.prototype.forEach.call(elements, function (element) {
-			element.className = 'lev1Name';
-		});
-		let element = document.getElementsByClassName('lev1Name')[index]
-		element.className = "lev1Name active";
+		// 点击一级菜单，更新clickMenu，动态改变一级菜单的active
 		this.setState({
 			clickMenu: index
 		})
+		sessionStorage.setItem('clickMenu', index)
 	}
-	componentDidMount() {
-		// 初始化
-		this.getUserInfo()
-	}
+
 	// 切换公司列表、项目详情事件
 	changeCompany(item, flag) {
 		if (flag === '1') {
@@ -102,11 +104,13 @@ class Home extends React.Component {
 				clickMenu: 5,
 				activeCompanyId: item.id
 			})
+			sessionStorage.setItem('clickMenu', 5)
 		} else if (flag === '2') {
 			// 公司列表跳转到项目
 			this.setState({
 				clickMenu: 2,
 			})
+			sessionStorage.setItem('clickMenu', 2)
 		}
 
 	}
@@ -126,7 +130,7 @@ class Home extends React.Component {
 							this.state.menuArr.map((item, index) => {
 								return (
 									<div className="lev1Menu" key={index}>
-										<div className="lev1Name"
+										<div className={Number(this.state.clickMenu) === index ? "lev1Name active" : "lev1Name"}
 											onMouseEnter={(e) => { this.selectMenuLev1(e, index) }}
 											onMouseLeave={(e) => { this.selectMenuLev1(e, index) }}
 											onClick={() => { this.clickMenu(index) }}
